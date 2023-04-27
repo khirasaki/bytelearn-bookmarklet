@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Install Bookmarklet</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <h1>Search First Line Bookmarklet</h1>
+  <p>Drag the following link to your bookmarks bar to install the bookmarklet:</p>
+  <a id="bookmarklet-link" href="#">Search First Line</a>
+  <script>
+    var bookmarkletCode = `javascript:(function() {
+      var firstTextElement = document.querySelector('body :not(script):not(style):not(meta)');
+      var firstLine = firstTextElement && firstTextElement.innerText.split('\\n')[0].trim();
+      
+      if (firstLine) {
+        var searchUrl = 'https://www.google.com/search?q=' + encodeURIComponent(firstLine);
+        window.open(searchUrl, '_blank');
+      } else {
+        alert('No text found on the page.');
+      }
+    })();`;
+
+    document.getElementById('bookmarklet-link').href = bookmarkletCode;
+  </script>
+</body>
+</html>
