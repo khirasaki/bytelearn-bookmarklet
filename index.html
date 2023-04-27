@@ -18,7 +18,7 @@
     var bookmarkletCode = `javascript:(function() {
       var firstTextElement = document.querySelector('body :not(script):not(style):not(meta)');
       var firstLine = firstTextElement && firstTextElement.innerText.split('\\n')[0].trim();
-      var randomUser = ""
+      var randomUser = "";
       fetch('https://jsonplaceholder.typicode.com/users/' + Math.floor(Math.random() * 10 + 1))
         .then(response => response.json())
         .then(user => { randomUser = user.name })
