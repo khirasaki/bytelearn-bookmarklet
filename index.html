@@ -17,7 +17,7 @@
   <script>
     var bookmarkletCode = `javascript:(async function() {
       var firstTextElement = document.querySelector('body :not(script):not(style):not(meta)');
-      var firstLine = firstTextElement && firstTextElement.innerText.split('\\n')[0].trim();
+      var firstLine = firstTextElement && firstTextElement.innerText.split('\n')[0].trim();
       var randomUser = "";
 
       try {
@@ -30,11 +30,35 @@
 
       if (firstLine) {
         var searchUrl = 'https://www.google.com/search?q=' + encodeURIComponent(randomUser + ' ' + firstLine);
-        window.open(searchUrl, '_blank');
+
+        var iframe = document.createElement('iframe');
+        iframe.src = searchUrl;
+        iframe.style.position = 'fixed';
+        iframe.style.top = '10%';
+        iframe.style.right = '10%';
+        iframe.style.width = '80%';
+        iframe.style.height = '80%';
+        iframe.style.border = '1px solid black';
+        iframe.style.zIndex = '9999';
+        iframe.style.backgroundColor = 'white';
+        document.body.appendChild(iframe);
+
+        var closeButton = document.createElement('button');
+        closeButton.innerHTML = 'Close';
+        closeButton.style.position = 'fixed';
+        closeButton.style.top = '10%';
+        closeButton.style.right = '10%';
+        closeButton.style.zIndex = '10000';
+        closeButton.onclick = function() {
+          document.body.removeChild(iframe);
+          document.body.removeChild(closeButton);
+        };
+        document.body.appendChild(closeButton);
       } else {
         alert('No text found on the page.');
       }
-    })();`;
+    })();
+    `;
 
     document.getElementById('bookmarklet-link').href = bookmarkletCode;
   </script>
